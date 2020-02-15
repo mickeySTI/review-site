@@ -39,9 +39,9 @@ class ReviewControllerMockMCVTest {
 
 	@Test
 	public void shouldGetStatusOfOkWhenNavigatingToAllReviews() throws Exception {
-		this.mockMvc.perform(get("/show-reviews"))
+		this.mockMvc.perform(get("/show-reviews")) // get is for mapping
 		.andExpect(status().isOk())
-		.andExpect(view().name("reviews-template"));
+		.andExpect(view().name("reviews-template")); // template
 	}
 	
 	@Test
@@ -57,15 +57,15 @@ class ReviewControllerMockMCVTest {
 	@Test
 	public void shouldAddAllReviewsToTheModel() throws Exception {
 		when(reviewRepo.findAllReviews()).thenReturn(Arrays.asList(reviewOne, reviewTwo));
-		this.mockMvc.perform(get("/reviews-template"))
-		.andExpect(model().attribute("reviewsModels", hasSize(2)));
+		this.mockMvc.perform(get("/show-reviews/"))
+		.andExpect(model().attribute("reviewsModel", hasSize(2)));
 	}
 	
 
 	@Test
-	public void shouldAddSingleReveiwToTheModel() throws Exception {
+	public void shouldAddSingleReviewToTheModel() throws Exception {
 		when(reviewRepo.findOneReview(1L)).thenReturn(reviewOne);
-		this.mockMvc.perform(get("/reviews/1"))
+		this.mockMvc.perform(get("/show-reviews/1"))
 		.andExpect(model().attribute("reviewModel", is(reviewOne)));
 	}
 	
@@ -73,7 +73,7 @@ class ReviewControllerMockMCVTest {
 	public void shouldReturnNotFoundForBadRequest() throws Exception {
 		Long badId = 5l;
 		when(reviewRepo.findOneReview(badId)).thenReturn(null);
-		this.mockMvc.perform(get("/reviews/5"))
+		this.mockMvc.perform(get("/review-templates/5"))
 		.andExpect(status().isNotFound());
 	}
 	

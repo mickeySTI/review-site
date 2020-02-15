@@ -26,7 +26,7 @@ public class ReviewController {
 	
 	
 	@GetMapping("/{id}")
-	public String findOneCourse(@PathVariable(value="id") Long id, Model model) throws ReviewNotFoundException{
+	public String findOneReview(@PathVariable(value="id") Long id, Model model) throws ReviewNotFoundException{
 		if(reviewRepo.findOneReview(id) == null) {
 			throw new ReviewNotFoundException();
 		}

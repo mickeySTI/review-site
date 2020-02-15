@@ -1,16 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:text="${reviewModel.name}">Review</title>
+	<title th:text="${reviewModel.title}">Review</title>
 </head>
 <body>
 
 	<header>
-		<h1 th:text="${reviewModel.name}">A Course</h1>
+		<h1 th:text="${reviewModel.title}">A Review</h1>
 	</header>
 
 	<main>
 		<p th:text="${reviewModel.title}"></p>
+		<img th:src="${reviewModel.urlImage}">
 	</main>
 
 	<footer>
