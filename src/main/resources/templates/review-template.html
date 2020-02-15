@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title th:text="${reviewModel.title}"></title>
-	<link rel="stylesheet" href="review-template.css">
+	<link rel="stylesheet" href="/review-template.css">
 </head>
 <body>
 
@@ -13,9 +13,16 @@
 	</header>
 
 	<main>
-		<img id="picture" th:src="${reviewModel.urlImage}">
-		<h3 th:text="${reviewModel.content}"></h3>
+		<img th:src="${reviewModel.urlImage}" />
 	</main>
+		<h3>Specifications</h3>
+		<table>
+		<tr>
+			<td th:text="${reviewModel.Engine}"></td>
+			<td th:text="${reviewModel.Hp}"></td>
+			</tr>
+		</table>
+	
 
 	<footer>
 		<p><a href="/show-reviews/">Go back to all reviews</a></p>

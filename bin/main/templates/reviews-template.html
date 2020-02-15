@@ -13,6 +13,7 @@
 
     <main>
         <ul>
+        <!-- Code below is to iterate over collections with Thymeleaf -->
             <li th:each="review: ${reviewsModel}"><a th:href="|/show-reviews/${review.id}|"
                     th:text="${review.title}"></a></li>
         </ul>

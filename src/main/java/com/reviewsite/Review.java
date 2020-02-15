@@ -6,14 +6,16 @@ public class Review {
 		private String title;
 		private String urlImage;
 		private String reviewCategory;
-		private String content;
+		private String engine;
+		private String hp;
 	
-		public Review(long id, String title, String urlImage, String reviewCategory, String content) {
+		public Review(long id, String title, String urlImage, String reviewCategory, String engine, String hp) {
 		this.id = id;
 		this.title = title;
 		this.urlImage = urlImage;
 		this.reviewCategory = reviewCategory;
-		this.content = content;
+		this.engine = engine;
+		this.hp = hp;
 	}
 
 	public Long getId() {
@@ -32,8 +34,12 @@ public class Review {
 		return reviewCategory;
 	}
 
-	public String getContent() {
-		return content;
+	public String getEngine() {
+		return engine;
+	}
+
+	public String getHp() {
+		return hp;
 	}
 	
 	
