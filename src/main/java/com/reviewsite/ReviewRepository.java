@@ -11,8 +11,8 @@ public class ReviewRepository {
 	
 	
 	private Map<Long,Review> reviewList = new HashMap<>();
-	private Review reviewOne = new Review(1L, "WRXSTI", "https://farm6.staticflickr.com/5038/7066030169_2a16e9aef1_b.jpg","sports car","specs");
-	private Review reviewTwo = new Review(2L, "Corolla", "imageURL","casual sedan","specs");
+	private Review reviewOne = new Review(1L, "WRXSTI", "https://farm6.staticflickr.com/5038/7066030169_2a16e9aef1_b.jpg","Sports Car","Specs");
+	private Review reviewTwo = new Review(2L, "Corolla", "https://farm5.staticflickr.com/4166/34257513110_d96b22c672_b.jpg","Casual Sedan","Specs");
 
 	
 	

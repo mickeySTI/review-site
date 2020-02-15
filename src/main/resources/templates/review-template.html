@@ -1,21 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:text="${reviewModel.title}">Review</title>
+	<title th:text="${reviewModel.title}"></title>
+	<link rel="stylesheet" href="review-template.css">
 </head>
 <body>
 
 	<header>
-		<h1 th:text="${reviewModel.title}">A Review</h1>
+		<h1 th:text="${reviewModel.title}"></h1>
+		<h3 th:text="${reviewModel.reviewCategory}"></h3>
+
 	</header>
 
 	<main>
-		<p th:text="${reviewModel.title}"></p>
-		<img th:src="${reviewModel.urlImage}">
+		<img id="picture" th:src="${reviewModel.urlImage}">
+		<h3 th:text="${reviewModel.content}"></h3>
 	</main>
 
 	<footer>
-		<p><a href="/show-reviews">Courses</a></p>
+		<p><a href="/show-reviews/">Go back to all reviews</a></p>
 		<small>&copy WCCI 2020</small>
 	</footer>
 

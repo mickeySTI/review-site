@@ -8,12 +8,12 @@
 <body>
 
     <header>
-        <h1>Reviews</h1>
+        <h1>Car Reviews</h1>
     </header>
 
     <main>
         <ul>
-            <li th:each="review: ${reviewModel}"><a th:href="|/show-reviews/${review.id}|"
+            <li th:each="review: ${reviewsModel}"><a th:href="|/show-reviews/${review.id}|"
                     th:text="${review.title}"></a></li>
         </ul>
     </main>
