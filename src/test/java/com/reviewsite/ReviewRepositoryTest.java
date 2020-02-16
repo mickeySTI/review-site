@@ -15,8 +15,8 @@ class ReviewRepositoryTest {
 	
 	private ReviewRepository underTest;
 	
-	private Review reviewOne = new Review(1L, "title", "imageURL","reviewCategory","content");
-	private Review reviewTwo = new Review(2L, "title", "imageURL","reviewCategory","content");
+	private Review reviewOne = new Review(1L, "title", "imageURL","reviewCategory","engine","hp");
+	private Review reviewTwo = new Review(2L, "title", "imageURL","reviewCategory","engine", "hp");
 
 	@Test
 	void shouldFindReviewOneById() {
@@ -29,7 +29,7 @@ class ReviewRepositoryTest {
 	
 	@Test
 	void shouldFindReviewTwoById() {
-		Review reviewTwo = new Review(2L, "title", "imageURL","reviewCategory","content");
+		Review reviewTwo = new Review(2L, "title", "imageURL","reviewCategory","engine","hp");
 		underTest = new ReviewRepository(reviewTwo); 
 		Review foundReview = underTest.findOneReview(2L);
 		assertThat(foundReview, is(reviewTwo));

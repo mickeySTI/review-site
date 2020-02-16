@@ -1,0 +1,22 @@
+h1{
+  margin: 0px
+}
+
+
+body{
+  text-align: center;
+  margin: 0px;
+  height: 100vh;
+  background-color: #3C58BF;
+  border-top: 0px;
+  border-left: 40px solid #DDE0EE;
+  border-right:40px solid #DDE0EE;
+  border-bottom: 40px solid #DDE0EE;
+}
+
+
+ul{
+    margin-left:auto; 
+    margin-right:auto;
+  }
+ 
