@@ -1,10 +1,15 @@
 package com.reviewsite;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+
 
 
 
@@ -21,16 +26,16 @@ public class Category {
 	
 	private String category;
 	
-	@ManyToOne // establishing relationship
-	private Review review;
+	@ManyToMany // establishing relationship
+	private Collection<Review> reviews;
 
 	public Category() {
 		
 	}
 	
-	public Category(String category,Review review) {
+	public Category(String category,Review...reviews) {
 		this.category = category;
-		this.review = review;
+		this.reviews = new HashSet<>(Arrays.asList(reviews));
 		                                                                                                                                                                              
 	}
 
@@ -66,7 +71,9 @@ public class Category {
 	}
 	
 	
-	
+	public Collection<Review> getReviews(){
+		return reviews;
+	}
 
 	
 

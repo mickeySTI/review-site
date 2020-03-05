@@ -5,10 +5,10 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -48,7 +48,6 @@ public class JPAMappingTest {
 	}
 	
 	
-	
 	@Test
 	public void shouldGenerateReviewId() {
 		Review review = reviewRepo.save(new Review("STI", "img", "review category", "EJ257", "300hp"));	
@@ -58,9 +57,6 @@ public class JPAMappingTest {
 		assertThat(reviewId, is(greaterThan(0L)));
 		
 	}
-	
-	
-	
 	
 	
 	@Test
@@ -74,12 +70,64 @@ public class JPAMappingTest {
 	Optional<Category> result = categoryRepo.findById(catId);
 	category = result.get();
 	assertThat(category.getCategory(), is("cars"));
+		
+	}
+	
+	@Test
+	public void shouldEstablishCategoryToReviewRelationship(){
+		Review review = reviewRepo.save(new Review("STI", "img", "cars", "EJ257", "300hp"));	 // creating non-owning  object and saving to repo
+		Review review2 = reviewRepo.save(new Review("Honda civic", "img", "cars", "k20", "200hp")); // creating non-owning object and saving to repo
+		
+		Category category  = categoryRepo.save(new Category("cars",review, review2)); // creating owning object and saving to repo
+		long catId = category.getId();	
+		entityManager.flush();
+		entityManager.clear();
+		
+		Optional<Category>result = categoryRepo.findById(catId); //finding specific review we just created
+		category = result.get(); // getting that specific review and assigning it to the variable review 
+		
+		assertThat(category.getReviews(), containsInAnyOrder(review, review2));
+		
+	}
 	
 	
+	@Test
+	public void shouldFindCategoriesForReview() {
+		Review review = reviewRepo.save(new Review("STI", "img", "cars", "EJ257", "300hp"));
+		
+		Category category  = categoryRepo.save(new Category("family cars",review));
+		Category category2  = categoryRepo.save(new Category("fast cars",review));
+		
 	
+		entityManager.flush();  
+		entityManager.clear();
+																	// this needs to match *reviews* instance in Category class		
+		Collection<Category> categoryForReview = categoryRepo.findByReviewsContains(review); 
+		
+		assertThat(categoryForReview, containsInAnyOrder(category,category2));
+		
+	}
+	
+	@Test
+	public void shouldFindCategoriesForReviewId() {
+		Review review = reviewRepo.save(new Review("STI", "img", "cars", "EJ257", "300hp"));
+		long reviewId = review.getId();
+		
+		Category category  = categoryRepo.save(new Category("family cars",review));
+		Category category2  = categoryRepo.save(new Category("fast cars",review));
+		
+	
+		entityManager.flush();  
+		entityManager.clear();
+																	// this needs to match *reviews* instance in Category class	
+		Collection<Category> categoryForReview = categoryRepo.findByReviewsId(reviewId);
+		
+		assertThat(categoryForReview, containsInAnyOrder(category,category2));
 		
 		
 	}
+	
+	
 	
 	
 	

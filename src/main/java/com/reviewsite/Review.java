@@ -5,7 +5,8 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+
 
 @Entity
 public class Review {
@@ -23,7 +24,7 @@ public class Review {
 		
 
 							
-		@OneToMany(mappedBy = "review")
+		@ManyToMany(mappedBy = "reviews") // non owning side
 		private Collection<Category> categories;
 		
 		
@@ -89,7 +90,6 @@ public class Review {
 	}
 
 	public Collection<Category> getCategories() {
-		// TODO Auto-generated method stub
 		return categories;
 	}
 	
