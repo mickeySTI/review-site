@@ -52,14 +52,14 @@ public class ReviewSiteControllerTest {
 	public void shouldAddSingleReviewToModel() throws ReviewNotFound {
 		long arbId = 1;
 		when(reviewRepo.findById(arbId)).thenReturn(Optional.of(review));
-		underTest.findOneCourse(arbId, model);
+		underTest.findOneReview(arbId, model);
 		verify(model).addAttribute("reviews",review);
 		
 		
 	}
 	
 	@Test
-	public void shouldFindAllCourses() {
+	public void shouldFindAllReviews() {
 		Collection<Review> allReviews = Arrays.asList(review,anotherReview);
 		when(reviewRepo.findAll()).thenReturn(allReviews);
 		
@@ -70,13 +70,26 @@ public class ReviewSiteControllerTest {
 
 	
 	@Test
-	public void shouldAddSingleCategoryToModel () {
+	public void shouldAddSingleCategoryToModel () throws CategoryNotFound {
+		long arbId = 1;
+		when(categoryRepo.findById(arbId)).thenReturn(Optional.of(category));
+		
+		underTest.findOneCategory(arbId,model);
+		verify(model).addAttribute("categories",category);
 		
 	}
 	
 	
 	@Test
 	public void shouldAddAllCategoriesToModel() {
+		Collection<Category> allCategories = Arrays.asList(category, anotherCategory);
+		
+		when(categoryRepo.findAll()).thenReturn(allCategories);
+		
+		underTest.findAllCategories(model);
+		verify(model).addAttribute("categories", allCategories);
+		
+		
 		
 	}
 	

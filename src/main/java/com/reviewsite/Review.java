@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 
 
@@ -33,6 +34,7 @@ public class Review {
 		private String urlImage;
 		private String engine;
 		private String hp;
+		@Lob
 		private String description;
 	
 		public Review(String title, String urlImage, String description, String engine, String hp) {

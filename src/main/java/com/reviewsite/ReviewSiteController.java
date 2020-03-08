@@ -15,9 +15,13 @@ public class ReviewSiteController {
 	@Resource
 	private ReviewRepository reviewRepo;
 	
+	@Resource
+	private CategoryRepository categoryRepo;
+	
+	
 	
 	@RequestMapping("/review")
-	public String findOneCourse(@RequestParam(value="id")long id, Model model) throws ReviewNotFound{
+	public String findOneReview(@RequestParam(value="id")long id, Model model) throws ReviewNotFound{
 		 Optional<Review> review = reviewRepo.findById(id);
 		 
 		 if(review.isPresent()) {
@@ -36,6 +40,27 @@ public class ReviewSiteController {
 							// this always stays plural
 		model.addAttribute("reviews", reviewRepo.findAll());
 		return("reviews"); // name of template
+		
+	}
+
+
+	public String findOneCategory(@RequestParam(value="id")long id, Model model) throws CategoryNotFound {
+		Optional<Category> category = categoryRepo.findById(id);
+		
+		if(category.isPresent()) {
+			model.addAttribute("categories", category.get());
+			return "category";
+			
+		}
+		
+		throw new CategoryNotFound();
+		
+	}
+
+	@RequestMapping("/show-categories") // end point
+	public String findAllCategories(Model model) {
+		model.addAttribute("categories", categoryRepo.findAll());
+		return("categories"); //name plate
 		
 	}
 	

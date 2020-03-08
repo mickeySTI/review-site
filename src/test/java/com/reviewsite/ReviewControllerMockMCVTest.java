@@ -76,7 +76,7 @@ class ReviewControllerMockMCVTest {
 	
 	@Test
 	public void shouldReturnNotFoundForBadRequest() throws Exception {
-		Long badId = 5l;
+		L	ong badId = 5l;
 		when(reviewRepo.findOneReview(badId)).thenReturn(null);
 		this.mockMvc.perform(get("/review-templates/5"))
 		.andExpect(status().isNotFound());
