@@ -58,15 +58,6 @@ public class ReviewSiteControllerTest {
 		
 	}
 	
-	@Test
-	public void shouldFindAllReviews() {
-		Collection<Review> allReviews = Arrays.asList(review,anotherReview);
-		when(reviewRepo.findAll()).thenReturn(allReviews);
-		
-		underTest.findAllReviews(model);
-		verify(model).addAttribute("reviews", allReviews);
-		
-	}
 
 	
 	@Test

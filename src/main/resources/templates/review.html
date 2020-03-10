@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:each = "review: ${reviews}">
+	<title th:text="${review.title}">A Review</title>
+</head>
+<body>
+
+	<header>
+		<h1>Review</h1>
+	</header>
+
+	<main th:each = "review: ${reviews}">
+		<p th:text="${review.title}"></p>
+		<p th:text="${review.description}"></p>
+	</main>
+
+	<footer>
+	
+		<small>&copy WCCI 2020</small>
+	</footer>
+
+</body>
+</html>

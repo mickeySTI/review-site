@@ -8,7 +8,8 @@ import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+
+import javax.persistence.OneToMany;
 
 
 
@@ -24,23 +25,23 @@ public class Category {
 
 	
 	
-	private String category;
+	private String name;
 	
-	@ManyToMany // establishing relationship
+	@OneToMany(mappedBy = "category")
 	private Collection<Review> reviews;
 
 	public Category() {
 		
 	}
 	
-	public Category(String category,Review...reviews) {
-		this.category = category;
+	public Category(String name,Review...reviews) {
+		this.name = name;
 		this.reviews = new HashSet<>(Arrays.asList(reviews));
 		                                                                                                                                                                              
 	}
 
-	public String getCategory() {
-		return category;
+	public String getName() {
+		return name;
 	}
 	
 	

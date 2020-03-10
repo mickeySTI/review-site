@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+</head>
+<body>
+
+	<header>
+		<h1>All the reviews in this Category</h1>
+	</header>
+
+
+	 <div id="reviewsInCategory" th:each="review : ${categories}">
+        <h2>
+            <a th:href="@{/review(id=${review.id})}" th:text="${review.name}"></a>
+        </h2>
+    </div>
+	
+
+	<footer>
+		<p><a href="/show-categories">Back To Categories</a></p>
+		<small>&copy WCCI 2020</small>
+	</footer>
+
+</body>
+</html>

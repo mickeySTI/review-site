@@ -1,12 +1,12 @@
 package com.reviewsite;
 
-import java.util.Collection;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -17,7 +17,6 @@ public class Review {
 		@GeneratedValue
 		private long id;
 	
-	//
 		//default constructor
 		public Review() {
 			
@@ -25,8 +24,8 @@ public class Review {
 		
 
 							
-		@ManyToMany(mappedBy = "reviews") // non owning side
-		private Collection<Category> categories;
+		@ManyToOne // owning side 
+		private Category category;
 		
 		
 		
@@ -37,12 +36,11 @@ public class Review {
 		@Lob
 		private String description;
 	
-		public Review(String title, String urlImage, String description, String engine, String hp) {
+		public Review(String title, String urlImage, String description, Category category){
 		this.title = title;
 		this.urlImage = urlImage;
 		this.description = description;
-		this.engine = engine;
-		this.hp = hp;
+		this.category = category;
 	}
 
 	public long getId() {
@@ -91,8 +89,8 @@ public class Review {
 		return description;
 	}
 
-	public Collection<Category> getCategories() {
-		return categories;
+	public Category getCategory() {
+		return category;
 	}
 	
 	

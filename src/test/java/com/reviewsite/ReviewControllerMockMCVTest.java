@@ -1,7 +1,6 @@
 package com.reviewsite;
 
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,8 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 
 import javax.annotation.Resource;
+
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +24,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ReviewController.class)
+@WebMvcTest(ReviewSiteController.class)
 class ReviewControllerMockMCVTest {
 	
 	@Resource
-	private MockMvc mockMvc;
+	private MockMvc mvc;
 	
 	@Mock
 	private Review reviewOne;
@@ -35,57 +37,67 @@ class ReviewControllerMockMCVTest {
 	private Review reviewTwo;
 	
 	//inject repo for test
-	@MockBean
+	@MockBean // MockBean is REPOS!
 	private ReviewRepository reviewRepo;
 	
-	@MockBean
+	@MockBean // MockBean is REPOS!
 	private CategoryRepository categoryRepo;
+	
 	
 
 	@Test
 	public void shouldGetStatusOfOkWhenNavigatingToAllReviews() throws Exception {
-		this.mockMvc.perform(get("/show-reviews")) // get is for mapping
-		.andExpect(status().isOk())
-		.andExpect(view().name("reviews-template")); // template
+		long arbReviewId = 1;
+		when(reviewRepo.findById(arbReviewId)).thenReturn(Optional.of(reviewOne));
+		mvc.perform(get("/review?id=1")).andExpect(view().name(is("review")));
+		
 	}
 	
 	@Test
 	public void shouldGetStatusOfOkWhenNavigatingToSingleReview() throws Exception {
-		when(reviewRepo.findOneReview(1L)).thenReturn(reviewOne);
-		this.mockMvc.perform(get("/show-reviews/1"))
-		.andExpect(status().isOk())
-		.andExpect(view().name("review-template"));
+		long arbReviewId = 1;
+		when(reviewRepo.findById(arbReviewId)).thenReturn(Optional.of(reviewOne));
+		mvc.perform(get("/review?id=1")).andExpect(status().isOk());
+	}
+	
+	
+	@Test
+	public void shouldNotBeOkForSingleReview() throws Exception {
+		long arbReviewId = 1;
+		when(reviewRepo.findById(arbReviewId)).thenReturn(Optional.of(reviewOne));
+		mvc.perform(get("/review?id=42")).andExpect(status().isNotFound());
+	}
+	
+	
+	@Test
+	public void shouldBeOkForAllReviews() throws Exception {
+		mvc.perform(get("/show-reviews")).andExpect(status().isOk());
+	}
+	
+
+	
+	@Test
+	public void shouldPutSingleReviewIntoModel() throws Exception{
+		when(reviewRepo.findById(1L)).thenReturn(Optional.of(reviewOne));
+		mvc.perform(get("/review?id=1")).andExpect(model().attribute("reviews", reviewOne));
+	
+	}
+	
+	@Test
+	public void shouldPutAllReviewsIntoModel() throws Exception{
+		Collection<Review> allReviews = Arrays.asList(reviewOne,reviewTwo);
+		when(reviewRepo.findAll()).thenReturn(allReviews);
+		mvc.perform(get("/show-reviews")).andExpect(model().attribute("reviews", allReviews));
+		
 		
 	}
 	
 	
 	@Test
-	public void shouldAddAllReviewsToTheModel() throws Exception {
-		when(reviewRepo.findAllReviews()).thenReturn(Arrays.asList(reviewOne, reviewTwo));
-		this.mockMvc.perform(get("/show-reviews/"))
-		.andExpect(model().attribute("reviewsModel", hasSize(2)));
+	public void shouldPutAllReviewsIntoView() throws Exception{
+		mvc.perform(get("/show-reviews")).andExpect(view().name(is("reviews")));
+		
 	}
 	
-
-	@Test
-	public void shouldAddSingleReviewToTheModel() throws Exception {
-		when(reviewRepo.findOneReview(1L)).thenReturn(reviewOne);
-		this.mockMvc.perform(get("/show-reviews/1"))
-		.andExpect(model().attribute("reviewModel", is(reviewOne)));
-	}
 	
-	@Test
-	public void shouldReturnNotFoundForBadRequest() throws Exception {
-		L	ong badId = 5l;
-		when(reviewRepo.findOneReview(badId)).thenReturn(null);
-		this.mockMvc.perform(get("/review-templates/5"))
-		.andExpect(status().isNotFound());
-	}
-	
-
-	
-	
-	
-	
-
 }

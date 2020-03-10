@@ -20,35 +20,15 @@ public class ReviewSiteController {
 	
 	
 	
-	@RequestMapping("/review")
-	public String findOneReview(@RequestParam(value="id")long id, Model model) throws ReviewNotFound{
-		 Optional<Review> review = reviewRepo.findById(id);
-		 
-		 if(review.isPresent()) {
-			 					// this always stays plural
-			 model.addAttribute("reviews", review.get());
-			 return "review";
-		 }
-		throw new ReviewNotFound();
-		 
-		
-	}
 
 
-	@RequestMapping("/show-reviews") // name on of end point
-	public String findAllReviews(Model model) {
-							// this always stays plural
-		model.addAttribute("reviews", reviewRepo.findAll());
-		return("reviews"); // name of template
-		
-	}
-
-
+	@RequestMapping("/category")
 	public String findOneCategory(@RequestParam(value="id")long id, Model model) throws CategoryNotFound {
 		Optional<Category> category = categoryRepo.findById(id);
 		
 		if(category.isPresent()) {
 			model.addAttribute("categories", category.get());
+			
 			return "category";
 			
 		}
@@ -65,6 +45,22 @@ public class ReviewSiteController {
 	}
 	
 	
+
+
+@RequestMapping("/review")
+public String findOneReview(@RequestParam(value="id")long id, Model model) throws ReviewNotFound{
+	Optional<Review> review = reviewRepo.findById(id);
 	
+	if(review.isPresent()) {
+		// this always stays plural
+		model.addAttribute("reviews", review.get());
+		model.addAttribute("categories", categoryRepo.findByReviewsContains(review.get())); //Query
+		return "review";
+	}
+	throw new ReviewNotFound();
+	
+	
+}
+
 
 }
