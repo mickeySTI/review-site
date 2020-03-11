@@ -37,7 +37,7 @@ public class JPAMappingTest {
 	@Test
 	public void shouldLoadAndSaveReview() {
 		Category category = categoryRepo.save(new Category("cars"));
-		Review review = reviewRepo.save(new Review("STI", "img", "description", category));
+		Review review = reviewRepo.save(new Review("STI", "img", "description"));
 		long reviewId = review.getId(); 
 		entityManager.flush();
 		entityManager.clear();
@@ -52,8 +52,7 @@ public class JPAMappingTest {
 	
 	@Test
 	public void shouldGenerateReviewId() {
-		Category category = categoryRepo.save(new Category("cars"));
-		Review review = reviewRepo.save(new Review("STI", "img", "description", category));
+		Review review = reviewRepo.save(new Review("STI", "img", "description"));
 		long reviewId =  review.getId();
 		entityManager.flush();
 		entityManager.clear();
@@ -78,10 +77,10 @@ public class JPAMappingTest {
 	@Test
 	public void shouldEstablishCategoryToReviewRelationship(){
 		
-		Category category = categoryRepo.save(new Category("cars"));
-		Review reviewOne = reviewRepo.save(new Review("STI", "img", "description", category));
-		Review reviewTwo = reviewRepo.save(new Review("STI", "img", "description", category));
+		Review reviewOne = reviewRepo.save(new Review("STI", "img", "description"));
+		Review reviewTwo = reviewRepo.save(new Review("Toyota", "img", "description"));
 		
+		Category category = categoryRepo.save(new Category("cars", reviewOne, reviewTwo));
 		long catId = category.getId();
 		
 		entityManager.flush();
@@ -95,44 +94,45 @@ public class JPAMappingTest {
 	}
 	
 	
-//	@Test
-//	public void shouldFindCategoriesForReview() {
-//		Review review = reviewRepo.save(new Review("STI", "img", "cars", "EJ257", "300hp"));
-//		
-//		Category category  = categoryRepo.save(new Category("family cars",review));
-//		Category category2  = categoryRepo.save(new Category("fast cars",review));
-//		
-//	
-//		entityManager.flush();  
-//		entityManager.clear();
-//																	// this needs to match *reviews* instance in Category class		
-//		Collection<Category> categoryForReview = categoryRepo.findByReviewsContains(review); 
-//		
-//		assertThat(categoryForReview, containsInAnyOrder(category,category2));
-//		
-//	}
-//	
-//	@Test
-//	public void shouldFindCategoriesForReviewId() {
-//		Review review = reviewRepo.save(new Review("STI", "img", "cars", "EJ257", "300hp"));
-//		long reviewId = review.getId();
-//		
-//		Category category  = categoryRepo.save(new Category("family cars",review));
-//		Category category2  = categoryRepo.save(new Category("fast cars",review));
-//		
-//	
-//		entityManager.flush();  
-//		entityManager.clear();
-//																	// this needs to match *reviews* instance in Category class	
-//		Collection<Category> categoryForReview = categoryRepo.findByReviewsId(reviewId);
-//		
-//		assertThat(categoryForReview, containsInAnyOrder(category,category2));
-//		
-//		
-//	}
-//	
-//	
-//	
+	@Test
+	public void shouldFindCategoriesForReview() {
+		
+		Review reviewOne = reviewRepo.save(new Review("STI", "img", "description"));
+		
+		Category category = categoryRepo.save(new Category("cars",reviewOne));
+	
+
+		entityManager.flush();  
+		entityManager.clear();
+							
+		Collection<Category> categoryForReview = categoryRepo.findByReviewsContains(reviewOne);
+		
+		
+		assertThat(categoryForReview, containsInAnyOrder(category));
+		
+	}
+	
+	@Test
+	public void shouldFindCategoriesForReviewId() {
+		Review review = reviewRepo.save(new Review("STI", "img", "cars"));
+		long reviewId = review.getId();
+	
+		Category category  = categoryRepo.save(new Category("cars",review));
+		
+	
+		entityManager.flush();  
+		entityManager.clear();
+																	
+		Collection<Category> categoryForReview = categoryRepo.findByReviewsId(reviewId);
+		
+		
+		assertThat(categoryForReview, containsInAnyOrder(category));
+		
+		
+	}
+	
+	
+	
 	
 	
 

@@ -24,23 +24,20 @@ public class Review {
 		
 
 							
-		@ManyToOne // owning side 
+		@ManyToOne
 		private Category category;
 		
 		
 		
 		private String title;
 		private String urlImage;
-		private String engine;
-		private String hp;
 		@Lob
 		private String description;
 	
-		public Review(String title, String urlImage, String description, Category category){
+		public Review(String title, String urlImage, String description){
 		this.title = title;
 		this.urlImage = urlImage;
 		this.description = description;
-		this.category = category;
 	}
 
 	public long getId() {
@@ -77,13 +74,6 @@ public class Review {
 		return urlImage;
 	}
 
-	public String getEngine() {
-		return engine;
-	}
-
-	public String getHp() {
-		return hp;
-	}
 
 	public String getDescription() {
 		return description;

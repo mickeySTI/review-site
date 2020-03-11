@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	
+	<link rel="stylesheet" href="/category.css">
+	<title th:text="${categories.name}"></title>
 </head>
 <body>
 
@@ -10,15 +11,17 @@
 	</header>
 
 
-	 <div id="reviewsInCategory" th:each="review : ${categories}">
+	 <div id="reviews" th:each="review : ${categories.reviews}">
         <h2>
-            <a th:href="@{/review(id=${review.id})}" th:text="${review.name}"></a>
+            <a th:href="@{/review(id=${review.id})}" th:text="${review.title}"></a>
         </h2>
     </div>
 	
 
 	<footer>
+		<div id = "back">
 		<p><a href="/show-categories">Back To Categories</a></p>
+		</div>
 		<small>&copy WCCI 2020</small>
 	</footer>
 

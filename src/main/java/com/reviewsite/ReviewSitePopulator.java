@@ -22,9 +22,9 @@ public class ReviewSitePopulator implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Review carOne = new Review( "WRXSTI","/images/WRXSTI.jpg","This is a review about the Subaru STI","Engine: EJ257", "HP: 300hp");
+		Review carOne = new Review( "WRXSTI","/images/WRXSTI.jpg","This is a review about the Subaru STI");
 		carOne = reviewRepo.save(carOne);
-		Review carTwo = new Review( "Corolla", "/images/Corolla.jpg","This is a review about the Toyota Corolla","Engine: 1ZZ-FE", "HP: 158hp");
+		Review carTwo = new Review( "Corolla", "/images/Corolla.jpg","This is a review about the Toyota Corolla");
 		carTwo = reviewRepo.save(carTwo);
 		
 		
