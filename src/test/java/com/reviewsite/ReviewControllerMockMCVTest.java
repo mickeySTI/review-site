@@ -69,10 +69,6 @@ class ReviewControllerMockMCVTest {
 	}
 	
 	
-	@Test
-	public void shouldBeOkForAllReviews() throws Exception {
-		mvc.perform(get("/show-reviews")).andExpect(status().isOk());
-	}
 	
 
 	
@@ -83,21 +79,7 @@ class ReviewControllerMockMCVTest {
 	
 	}
 	
-	@Test
-	public void shouldPutAllReviewsIntoModel() throws Exception{
-		Collection<Review> allReviews = Arrays.asList(reviewOne,reviewTwo);
-		when(reviewRepo.findAll()).thenReturn(allReviews);
-		mvc.perform(get("/show-reviews")).andExpect(model().attribute("reviews", allReviews));
-		
-		
-	}
-	
-	
-	@Test
-	public void shouldPutAllReviewsIntoView() throws Exception{
-		mvc.perform(get("/show-reviews")).andExpect(view().name(is("reviews")));
-		
-	}
+
 	
 	
 }
